@@ -214,7 +214,7 @@ if (!empty($_POST)) {
 
       if (!$validation->errors()) {
         //process
-        $new_password_hash = password_hash(Input::get('pwx', true), PASSWORD_BCRYPT, ['cost' => 13]);
+        $new_password_hash = password_hash(Input::get('pwx', true), PASSWORD_ARGON2ID, ['memory_cost' => '1024','time_cost' => 4,'threads' => 2]);
         $user->update(['password' => $new_password_hash], $userId);
         $successes[] = 'Password updated.';
         logger($user->data()->id, 'User Manager', "Updated password for $userdetails->fname.");

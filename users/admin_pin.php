@@ -73,7 +73,7 @@ if (!empty($_POST)) {
       $errors[] = $error[0];
     }
     if(empty($errors)) {
-      $pin_hash = password_hash(Input::get('pin'),PASSWORD_BCRYPT,array('cost' => 13));
+      $pin_hash = password_hash(Input::get('pin'),PASSWORD_ARGON2ID,array('memory_cost' => '1024','time_cost' => 4,'threads' => 2)),
       $db->update('users',$user->data()->id,['pin' => $pin_hash]);
       if(!$db->error()) {
         logger($user->data()->id,"Admin Verification","User set PIN Code");

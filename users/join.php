@@ -164,7 +164,7 @@ if (Input::exists()) {
                     'fname' => ucfirst(Input::get('fname')),
                     'lname' => ucfirst(Input::get('lname')),
                     'email' => Input::get('email'),
-                    'password' => password_hash(Input::get('password', true), PASSWORD_BCRYPT, ['cost' => 13]),
+                    'password' => password_hash(Input::get('password', true), PASSWORD_ARGON2ID, ['memory_cost' => '1024','time_cost' => 4,'threads' => 2]),
                     'permissions' => 1,
                     'join_date' => $join_date,
                     'email_verified' => $pre,

@@ -235,7 +235,7 @@ if (!empty($_POST)) {
         if (empty($errors)) {
           //process
 
-          $new_password_hash = password_hash(Input::get('password'), PASSWORD_BCRYPT, ['cost' => 13]);
+          $new_password_hash = password_hash(Input::get('password'), PASSWORD_ARGON2ID, ['memory_cost' => '1024','time_cost' => 4,'threads' => 2]);
           $user->update(['password' => $new_password_hash, 'force_pr' => 0, 'vericode' => randomstring(15)], $user->data()->id);
           $successes[] = lang('PW_UPD');
           logger($user->data()->id, 'User', 'Updated password.');

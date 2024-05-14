@@ -87,7 +87,7 @@ if (Input::get('reset') == 1) { //$_GET['reset'] is set when clicking the link i
 			}
 			//update password
 			$ruser->update(array(
-				'password' => password_hash(Input::get('password'), PASSWORD_BCRYPT, array('cost' => 13)),
+				'password' => password_hash(Input::get('password'), PASSWORD_ARGON2ID, array('memory_cost' => '1024','time_cost' => 4,'threads' => 2)),
 				'vericode' => randomstring(15),
 				'vericode_expiry' => date("Y-m-d H:i:s"),
 				'email_verified' => true,

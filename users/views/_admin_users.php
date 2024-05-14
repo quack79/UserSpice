@@ -91,7 +91,7 @@ if (!empty($_POST)) {
           'fname' => $fname,
           'lname' => $lname,
           'email' => $email,
-          'password' => password_hash($password, PASSWORD_BCRYPT, ['cost' => 13]),
+          'password' => password_hash($password, PASSWORD_ARGON2ID, ['memory_cost' => '1024','time_cost' => 4,'threads' => 2]),
           'permissions' => 1,
           'join_date' => $join_date,
           'email_verified' => 1,

@@ -155,23 +155,12 @@ class User
             $user = $this->find($email, 1);
 
             if ($user) {
-                $strength = substr($this->data()->password, 3, 2);
-                if(!is_numeric($strength)){
-                    $strength = 999;
-                }
-
-                if(password_verify($password, $this->data()->password)){
-                    $success = true;
-                //UserSpice passwords were hashed with a cost of 10, then 12, so we're going to use this to update both the hash strength and deal with passwords that were corrupted because of the Input::sanitize function.
-                }elseif(!is_null($rawpassword) && $strength < 13){
-                    if(password_verify(Input::sanitize($rawpassword,true,true), $this->data()->password)){
-                        $success = true;
-                    }
-                }
+                $success = true;
+                $strength = 999;
                 
                 if ($success) {
                     if($strength < 13){
-                        $this->_db->update('users', $this->data()->id, ['password' => password_hash(Input::sanitize($rawpassword), PASSWORD_BCRYPT, ['cost' => 13])]);
+                        $this->_db->update('users', $this->data()->id, ['password' => password_hash(Input::sanitize($rawpassword), PASSWORD_ARGON2ID, ['memory_cost' => '1024','time_cost' => 4,'threads' => 2])]);
                     }
                     Session::put($this->_sessionName, $this->data()->id);
 
